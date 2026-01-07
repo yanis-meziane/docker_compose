@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rentalservices-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rentalservices
+  template:
+    metadata:
+      labels:
+        app: rentalservices
+    spec:
+      containers:
+      - name: rentalservices
+        image: hellfir/rentalservices
+        imagePullPolicy: Always
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: rentalservices
+spec:
+  ports:
+    - name: http
+      targetPort: 8080
+      port: 80
+  type: NodePort
+  selector:
+    app: front-end
+
